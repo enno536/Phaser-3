@@ -23,6 +23,12 @@ Minimal starter project to get a Phaser game environment up and running with eas
 ## Reset to savepoint
 - git reset --hard
 
+
+## Create new breakpoint
+- git checkout -b "irgendwas"
+- git add -A
+- git commit -m "Eine Message"
+
 ## Phaser 2
 
 If you are looking for a Phaser 2 starter environment, you can download the [1.0.1 release](https://github.com/oliverbenns/phaser-starter/releases/1.0.1)
