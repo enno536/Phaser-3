@@ -70,12 +70,12 @@ function create() {
   platforms.create(750, 220, 'ground');
 
   player = this.physics.add.sprite(100, 450, 'dude');
-  //player2 = this.physics.add.sprite(100, 100, 'dude')
+  player2 = this.physics.add.sprite(140, 450, 'dude')
 
   player.setBounce(0.2);
   player.setCollideWorldBounds(true);
-  //player2.setBounce(0.2);
-  //player2.setCollideWorldBounds(true);
+  player2.setBounce(0.2);
+  player2.setCollideWorldBounds(true);
   scoreText = this.add.text(50, 50, 'score: 0', { fontSize: '32px', fill: '#000' });
   highscoretext = this.add.text(400, 50, 'highscore: 0', { fontSize: '32px', fill: '#000' });
 
@@ -101,15 +101,8 @@ function create() {
 
   });
 
-
-
-
-
-
-
-
   this.physics.add.collider(player, platforms);
-  //this.physics.add.collider(player2, platforms);
+  this.physics.add.collider(player2, platforms);
   stars = this.physics.add.group({
     key: 'star',
     repeat: 11,
@@ -119,7 +112,7 @@ function create() {
   });
   this.physics.add.collider(stars, platforms);
   this.physics.add.overlap(player, stars, collectStar, null, this);
-  //this.physics.add.overlap(player2, stars, collectStar, null, this);
+  this.physics.add.overlap(player2, stars, collectStar, null, this);
 
   stars.children.iterate(function (child) {
 
@@ -132,46 +125,43 @@ function create() {
   this.physics.add.collider(bombs, platforms);
 
   this.physics.add.collider(player, bombs, hitBomb, null, this);
-  //this.physics.add.collider(player2, bombs, hitBomb, null, this);
+  this.physics.add.collider(player2, bombs, hitBomb, null, this);
 }
 
 function update() {
-
   if (cursors.left.isDown) {
     player.setVelocityX(-160);
-    if (wasd.A.isDown) {
-      //  player2.setVelocityX(-160);
-    }
-
-
     player.anims.play('left', true);
-    //player2.anims.play('left', true);
-
   }
+
   if (cursors.right.isDown) {
     player.setVelocityX(160);
-  }
-  //else if (wasd.D.isDown) {
-  //player2.setVelocityX(160);
-
-
-  player.anims.play('right', true);
-  //player2.anims.play('right', true);
-
-  {
-    player.setVelocityX(0);
-    //player2.setVelocityX(0);
-
-    player.anims.play('turn');
-    //player2.anims.play('turn');
+    player.anims.play('right', true);
   }
 
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-330);
   }
-  if (wasd.W.isDown && player.body.touching.down) {
-    //player2.setVelocityY(-330);
+  // Ab hier steuerung für player2
+  // statt cursor wasd!
+  // statt player player2! 
+
+  if (wasd.A.isDown) {
+    player2.setVelocityX(-160);
+    player2.anims.play('left', true);
   }
+
+  if (wasd.D.isDown) {
+    player2.setVelocityX(160);
+    player2.anims.play('right', true);
+  }
+
+  if (wasd.W.isDown && player2.body.touching.down) {
+    player2.setVelocityY(-330);
+  }
+
+  // Redo stop, redop stand still
+
 }
 
 
