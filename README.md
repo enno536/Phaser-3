@@ -20,6 +20,8 @@ Minimal starter project to get a Phaser game environment up and running with eas
 ## Build
 - `npm run build`
 - All game files will be in `/dist`
+## Reset to savepoint
+- git reset --hard
 
 ## Phaser 2
 
