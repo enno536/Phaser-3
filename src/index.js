@@ -55,6 +55,11 @@ let bombs
 let gameOver
 let wasd;
 
+/**
+ * @type {Player[]}
+ */
+let players = [];
+
 class Player {
   playerSprite
   controls
@@ -68,15 +73,15 @@ class Player {
     this.playerSprite = scene.physics.add.sprite(startPosition.x, startPosition, 'dude');
     this.playerSprite.setBounce(0.2);
     this.playerSprite.setCollideWorldBounds(true);
-
+    console.log("creating player", this.playerSprite);
   }
 }
-
-
 
 function create() {
   const playerOne = new Player(this, this.input.keyboard.createCursorKeys(), { x: 100, y: 500 });
   const playerTwo = new Player(this, this.input.keyboard.addKeys("W,S,A,D"), { x: 100, y: 400 });
+  players.push(playerOne);
+  players.push(playerTwo);
 
   this.add.image(400, 300, 'sky');
   platforms = this.physics.add.staticGroup();
@@ -137,46 +142,33 @@ function create() {
 }
 
 function update() {
-  if (cursors.left.isDown) {
-    player.setVelocityX(-160);
-    player.anims.play('left', true);
-  }
+  //"W,S,A,D"
+  players.forEach((player) => {
+    const controls = Object.values(player.controls);
+    const up = controls[0]
+    const left = controls[2];
+    const right = controls[3];
 
-  else if (cursors.right.isDown) {
-    player.setVelocityX(160);
-    player.anims.play('right', true);
-  }
-  else {
-    player.setVelocityX(0);
+    const playerSprite = player.playerSprite;
 
-    player.anims.play('turn');
-  }
+    if (left.isDown) {
+      playerSprite.setVelocityX(-160);
+      playerSprite.anims.play('left', true);
+    }
 
+    else if (right.isDown) {
+      playerSprite.setVelocityX(160);
+      playerSprite.anims.play('right', true);
+    }
+    else {
+      playerSprite.setVelocityX(0);
+      playerSprite.anims.play('turn');
+    }
 
-  if (cursors.up.isDown && player.body.touching.down) {
-    player.setVelocityY(-330);
-  }
-  // Ab hier steuerung für player2
-  // statt cursor wasd!
-  // statt player player2! 
-
-  if (wasd.A.isDown) {
-    player2.setVelocityX(-160);
-    player2.anims.play('left', true);
-  }
-
-  else if (wasd.D.isDown) {
-    player2.setVelocityX(160);
-    player2.anims.play('right', true);
-  }
-  /*else {
-    player.setVelocityX(0);
-
-    player.anims.play('turn');
-  }*/
-  if (wasd.W.isDown && player2.body.touching.down) {
-    player2.setVelocityY(-330);
-  }
+    if (up.isDown && playerSprite.body.touching.down) {
+      playerSprite.setVelocityY(-330);
+    }
+  })
 }
 
 function hitBomb(player, bomb) {
