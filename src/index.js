@@ -70,7 +70,7 @@ class Player {
 
   constructor(scene, keys, startPosition) {
     this.controls = keys;
-    this.playerSprite = scene.physics.add.sprite(startPosition.x, startPosition, 'dude');
+    this.playerSprite = scene.physics.add.sprite(startPosition.x, startPosition.y, 'dude');
     this.playerSprite.setBounce(0.2);
     this.playerSprite.setCollideWorldBounds(true);
     console.log("creating player", this.playerSprite);
@@ -78,10 +78,6 @@ class Player {
 }
 
 function create() {
-  const playerOne = new Player(this, this.input.keyboard.createCursorKeys(), { x: 100, y: 500 });
-  const playerTwo = new Player(this, this.input.keyboard.addKeys("W,S,A,D"), { x: 100, y: 400 });
-  players.push(playerOne);
-  players.push(playerTwo);
 
   this.add.image(400, 300, 'sky');
   platforms = this.physics.add.staticGroup();
@@ -89,6 +85,11 @@ function create() {
   platforms.create(600, 400, 'ground');
   platforms.create(50, 250, 'ground');
   platforms.create(750, 220, 'ground');
+
+  const playerOne = new Player(this, this.input.keyboard.createCursorKeys(), { x: 100, y: 400 });
+  const playerTwo = new Player(this, this.input.keyboard.addKeys("W,S,A,D"), { x: 120, y: 400 });
+  players.push(playerOne);
+  players.push(playerTwo);
 
   scoreText1 = this.add.text(50, 50, 'score1: 0', { fontSize: '16px', fill: '#000' });
   scoreText2 = this.add.text(620, 50, 'score2: 0', { fontSize: '16px', fill: '#000' });
