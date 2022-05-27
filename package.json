@@ -28,9 +28,9 @@
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "build": "rm -rf dist && webpack --mode production"
+    "build": "webpack --mode production"
   },
   "dependencies": {
-    "phaser": "^3.16.1"
+    "phaser": "^3.55.2"
   }
 }
